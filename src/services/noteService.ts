@@ -15,12 +15,8 @@ export interface FetchNotesParams {
   perPage: number;
   search?: string;
 }
-
 export interface FetchNotesResponse {
   notes: Note[];
-  total: number;
-  page: number;
-  perPage: number;
   totalPages: number;
 }
 
@@ -42,7 +38,7 @@ export const fetchNotes = async ({
 };
 
 export const createNote = async (payload: CreateNotePayload): Promise<Note> => {
-  const response = await noteApi.post<Note>('/notes', payload);
+  const response = await noteApi.post<Note>(`/notes`, payload);
   return response.data;
 };
 
