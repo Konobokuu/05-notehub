@@ -14,8 +14,8 @@ export default function App() {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  
   const perPage = 12;
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ['notes', page, search],
     queryFn: () => fetchNotes({ page, perPage, search }),
@@ -30,9 +30,8 @@ export default function App() {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     debouncedSearch(e.target.value);
   };
-
-  const handlePageChange = (selectedPage: number) => {
-    setPage(selectedPage);
+  const handlePageChange = (zeroBasedIndex: number) => {
+    setPage(zeroBasedIndex + 1);
   };
 
   return (
@@ -55,7 +54,6 @@ export default function App() {
         {isLoading && <p>Loading notes...</p>}
         {isError && <p>Something went wrong. Please try again later.</p>}
         
-        {/* ВИПРАВЛЕНО: Прибрали onDelete, NoteList тепер сам видаляє нотатки */}
         {data && data.notes.length > 0 ? (
           <NoteList notes={data.notes} />
         ) : (
