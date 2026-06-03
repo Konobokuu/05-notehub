@@ -10,24 +10,24 @@ const ReactPaginate = (
 
 interface PaginationProps {
   pageCount: number;
-  onPageChange: (selectedPage: number) => void;
-  forcePage: number;
+  onPageChange: (selectedPage: number) => void; // 0-based
+  forcePage: number; // 0-based
 }
 
 export default function Pagination({ pageCount, onPageChange, forcePage }: PaginationProps) {
   const handlePageClick = (event: { selected: number }) => {
-    onPageChange(event.selected + 1);
+    onPageChange(event.selected); // ❗ без +1
   };
 
   return (
     <ReactPaginate
       breakLabel="..."
       nextLabel="next >"
-      onPageChange={handlePageClick}
+      previousLabel="< prev"
       pageRangeDisplayed={3}
       marginPagesDisplayed={1}
       pageCount={pageCount}
-      previousLabel="< prev"
+      onPageChange={handlePageClick}
       forcePage={forcePage}
       containerClassName={css.pagination}
       activeClassName={css.active}
